@@ -51,8 +51,14 @@ import pickle as pkl
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 # app.config['suppress_callback_exceptions']=True
 
+
+
+# external_stylesheets = ["https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"]
+# app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+# app.config['suppress_callback_exceptions']=True
+
 app = dash.Dash(__name__)
-server = app.server
+server = app.server # this is for deploying the app online.
 
 app.layout = html.Div(children=[
     html.H1(children='Welcome to SleepAdvisor!',
@@ -152,7 +158,7 @@ app.layout = html.Div(children=[
             'marginLeft':20, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#2667B4'}), style ={'padding':10})],
 
-        style={'display':'inline-block', 'width':'45%', 'vertical-align': 'top', 'horizontal-align': 'center'}),
+        style={'display':'inline-block', 'width':'45%', 'vertical-align': 'top', 'horizontal-align':'center'}),
 
 
 
@@ -229,38 +235,38 @@ app.layout = html.Div(children=[
 
 
     html.Div(
-    	html.Button('submit', id='age_button', style=
-    		{'float':'bottom', 'marginRight':30, 'color':'#4F1F90', 'fontSize':18, 'font-family':'Arial'})),
+        html.Button('submit', id='age_button', style=
+            {'float':'bottom', 'marginRight':30, 'color':'#4F1F90', 'fontSize':18, 'font-family':'Arial'})),
 
     html.Div(id='result', style = {'marginLeft':400, 'marginRight':400, 'width':'500','height':'30',
-    	'font-family':'Arial', 'fontSize':26,'color':'#2667B4', 'padding':20, 'horizontal-align':'center'})
+        'font-family':'Arial', 'fontSize':26,'color':'#2667B4', 'padding':20, 'horizontal-align':'center'})
 
     ])
 
 @app.callback(
-	Output('result', 'children'),
-	[Input('age_button', 'n_clicks')],
-	[State('Age', 'value'),
-	State('Gender', 'value'),
-	State('BP', 'value'),
-	State('AlcoholicDrinks', 'value'),
-	State('MorningCaffeine', 'value'),
-	State('AfternoonCaffeine', 'value'),
-	State('EveningCaffeine', 'value'),
-	State('ActivityLevel', 'value'),
-	State('Vigorous', 'value'),
-	State('Moderate', 'value'),
-	State('Light', 'value'),
-	State('Indoors', 'value'),
-	State('BMI', 'value')])
+    Output('result', 'children'),
+    [Input('age_button', 'n_clicks')],
+    [State('Age', 'value'),
+    State('Gender', 'value'),
+    State('BP', 'value'),
+    State('AlcoholicDrinks', 'value'),
+    State('MorningCaffeine', 'value'),
+    State('AfternoonCaffeine', 'value'),
+    State('EveningCaffeine', 'value'),
+    State('ActivityLevel', 'value'),
+    State('Vigorous', 'value'),
+    State('Moderate', 'value'),
+    State('Light', 'value'),
+    State('Indoors', 'value'),
+    State('BMI', 'value')])
 
 def predict_with_age(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
 
-	Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
-	result = model.predict(Vars)[0]
-	return 'On a scale of 1 to 4 (4 being best), your sleep quality score is {:,.2f}.'.format(result, 1)
+    Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
+    result = model.predict(Vars)[0]
+    return 'On a scale of 1 to 4 (4 being best), your sleep quality score is {:,.2f}.'.format(result, 1)
 
 if __name__ == '__main__':
     model = joblib.load("./pickle_Random_Forest.pkl")
