@@ -21,6 +21,8 @@ import pickle as pkl
 app = dash.Dash(__name__)
 server = app.server # this is for deploying the app online.
 
+model = pkl.load(open("pickle_Random_Forest.pkl", 'rb'))
+
 app.layout = html.Div(children=[
     html.H1(children='Welcome to SleepAdvisor!',
         style={'marginTop':15,
@@ -220,5 +222,5 @@ def predict_with_age(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine
     return 'On a scale of 1 to 4 (4 being best), your sleep quality score is {:,.2f}.'.format(result, 1)
 
 if __name__ == '__main__':
-    model = joblib.load("~/app/pickle_Random_Forest.pkl")
+#    model = joblib.load("./pickle_Random_Forest.pkl")
     app.run_server(debug=True)
