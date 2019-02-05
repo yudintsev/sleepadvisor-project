@@ -4,7 +4,7 @@ import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State# this import is for Dash callback functionality.
+from dash.dependencies import Input, Output, State # this import is for Dash callback functionality.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -38,16 +38,6 @@ app.layout = html.Div(children=[
             'marginLeft':20, 'width':'160','height':'25',
             'fontSize':16, 'color':'#2667B4', 'font-family':'Arial'}), style = {'padding':10}),
 
-
-
-# dcc.RadioItems(
-#     options=[
-#         {'label': 'New York City', 'value': 'NYC'},
-#         {'label': 'Montréal', 'value': 'MTL'},
-#         {'label': 'San Francisco', 'value': 'SF'}
-#     ],
-#     value='MTL'
-# )
 
 
         html.Div(children=[
