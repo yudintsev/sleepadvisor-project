@@ -2,7 +2,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State, Event # this import is for Dash callback functionality.
+from dash.dependencies import Input, Output, State # this import is for Dash callback functionality.
 from sklearn.externals import joblib
 import plotly.graph_objs as go
 import pickle as pkl
