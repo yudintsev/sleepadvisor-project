@@ -2,7 +2,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State, Event # this import is for Dash callback functionality.
+from dash.dependencies import Input, Output, State # this import is for Dash callback functionality.
 from sklearn.externals import joblib
 import plotly.graph_objs as go
 import pickle as pkl
@@ -293,37 +293,37 @@ def recommend(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, After
     ind_of_max_Y = np.argmax(Y)
     improvement = Y[ind_of_max_Y]
     if Y[0] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you reduce your alcohol by 1 drink.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you reduced your alcohol consuption by 1 drink.'.format(improvement, 1)
     elif Y[1] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your alcohol by 1 drink.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased your alcohol consumption by 1 drink.'.format(improvement, 1)
     elif Y[2] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your morning caffeine intake by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased your morning caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[3] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your morning caffeine intake by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased your morning caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[4] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your afternoon caffeine beverage by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased your afternoon caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[5] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your afternoon caffeine beverage by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased your afternoon caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[6] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your evening caffeine beverage by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased your evening caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[7] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your evening caffeine beverage by 1.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased your evening caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[8] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your overall activity level by 1 level.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased your overall activity level by 1.'.format(improvement, 1)
     elif Y[9] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your overall activity level by 1 level.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased your overall activity level by 1.'.format(improvement, 1)
     elif Y[10] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
     elif Y[11] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
     elif Y[12] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your moderate activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your moderate-level activities by 1 hour.'.format(improvement, 1)
     elif Y[13] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your moderate activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your moderate-level activities by 1 hour.'.format(improvement, 1)
     elif Y[14] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your light activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your light-level activities by 1 hour.'.format(improvement, 1)
     elif Y[15] == improvement:
-        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your light activities by 1 hour.'.format(improvement, 1)
+        return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your light-level activities by 1 hour.'.format(improvement, 1)
     elif result == improvement:
         return 'Your sleep quality score is at its max of {:,.2f}.'.format(improvement, 1)
 
