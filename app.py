@@ -2,10 +2,11 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State # this import is for Dash callback functionality.
+from dash.dependencies import Input, Output, State, Event # this import is for Dash callback functionality.
 from sklearn.externals import joblib
 import plotly.graph_objs as go
 import pickle as pkl
+import numpy as np
 
 # external_stylesheets = ["https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"]
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -196,94 +197,174 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
 
 
         html.Div(
-        	html.Button('submit', id='age_button', style=
-        		{'marginRight':0, 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'
-        		}), style = {'paddingLeft':60})],
+            html.Button('submit', id='age_button', style=
+                {'marginRight':0, 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'
+                }), style = {'paddingLeft':60})],
 
-        	style={'display':'inline-block', 'width':'45%', 'vertical-align': 'top', 'horizontal-align':'center'}),
+            style={'display':'inline-block', 'width':'45%', 'vertical-align': 'top', 'horizontal-align':'center'}),
 
 
     # html.Div(
-    # 	html.Button('submit', id='age_button', style=
-    # 		{'float':'bottom', 'marginRight':30, 'color':'#4F1F90', 'fontSize':18, 'font-family':'Arial',
-    # 		'horizontal-align':'center'})),
+    #   html.Button('submit', id='age_button', style=
+    #       {'float':'bottom', 'marginRight':30, 'color':'#4F1F90', 'fontSize':18, 'font-family':'Arial',
+    #       'horizontal-align':'center'})),
 
-    html.Div(id='result', style = {'marginLeft':200, 'marginRight':200, 'width':'1000','height':'30',
-    	'font-family':'Arial', 'fontSize':26,'color':'#859CAB', 'paddingTop':50, 'paddingBottom':25,
-    	'horizontal-align':'center'}),
-
+    html.Div(id='result', style = {'marginLeft':'25%', 'marginRight':'25%', 'width':'50%','height':'60',
+        'font-family':'Arial', 'fontSize':22,'color':'#618FAE', 'paddingTop':50, 'paddingBottom':0,
+        'horizontal-align':'center'}),
+    
+    html.Div(id='improvement', style = {'marginLeft':'25%', 'marginRight':'25%', 'width':'50%','height':'60',
+        'font-family':'Arial', 'fontSize':22,'color':'#618FAE', 'paddingTop':0, 'paddingBottom':25,
+        'horizontal-align':'center'}),
 
     dcc.Graph(
-    	id='Graph', style = {'height': 500, 'width':1000, 'marginLeft':200, 'marginRight':200},
-    	figure={
-    	'data': [],
-    	# 'marker':{'color':'#859CAB'},
-    	'layout': {
-    	'plot_bgcolor': colors['background'],
-    	'paper_bgcolor': colors['background']
-    	}
-    	}
-    	)
+        id='Graph', style = {'height': 500, 'width':1000, 'marginLeft':200, 'marginRight':200},
+        figure={
+        'data': [],
+        # 'marker':{'color':'#859CAB'},
+        'layout': {
+        'plot_bgcolor': colors['background'],
+        'paper_bgcolor': colors['background']
+        }
+        }
+        )
     ])
 
 @app.callback(
-	Output('result', 'children'),
-	[Input('age_button', 'n_clicks')],
-	[State('Age', 'value'),
-	State('Gender', 'value'),
-	State('BP', 'value'),
-	State('AlcoholicDrinks', 'value'),
-	State('MorningCaffeine', 'value'),
-	State('AfternoonCaffeine', 'value'),
-	State('EveningCaffeine', 'value'),
-	State('ActivityLevel', 'value'),
-	State('Vigorous', 'value'),
-	State('Moderate', 'value'),
-	State('Light', 'value'),
-	State('Indoors', 'value'),
-	State('BMI', 'value')])
+    Output('result', 'children'),
+    [Input('age_button', 'n_clicks')],
+    [State('Age', 'value'),
+    State('Gender', 'value'),
+    State('BP', 'value'),
+    State('AlcoholicDrinks', 'value'),
+    State('MorningCaffeine', 'value'),
+    State('AfternoonCaffeine', 'value'),
+    State('EveningCaffeine', 'value'),
+    State('ActivityLevel', 'value'),
+    State('Vigorous', 'value'),
+    State('Moderate', 'value'),
+    State('Light', 'value'),
+    State('Indoors', 'value'),
+    State('BMI', 'value')])
 
-def predict_with_age(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
 
-	Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
-	result = model.predict(Vars)[0]
-	return 'On a scale of 1 to 4 (4 being best), your sleep quality score is {:,.2f}.'.format(result, 1)
+def predict_result(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
+
+    Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
+    result = model.predict(Vars)[0]
+    return 'On a scale of 1 to 4 (4 being best), your current sleep quality score is {:,.2f}.'.format(result, 1)
+
+
 
 @app.callback(
-	Output('Graph', 'figure'),
-	[Input('age_button', 'n_clicks')],
-	[State('Age', 'value'),
-	State('Gender', 'value'),
-	State('BP', 'value'),
-	State('AlcoholicDrinks', 'value'),
-	State('MorningCaffeine', 'value'),
-	State('AfternoonCaffeine', 'value'),
-	State('EveningCaffeine', 'value'),
-	State('ActivityLevel', 'value'),
-	State('Vigorous', 'value'),
-	State('Moderate', 'value'),
-	State('Light', 'value'),
-	State('Indoors', 'value'),
-	State('BMI', 'value')])
+    Output('improvement', 'children'),
+    [Input('age_button', 'n_clicks')],
+    [State('Age', 'value'),
+    State('Gender', 'value'),
+    State('BP', 'value'),
+    State('AlcoholicDrinks', 'value'),
+    State('MorningCaffeine', 'value'),
+    State('AfternoonCaffeine', 'value'),
+    State('EveningCaffeine', 'value'),
+    State('ActivityLevel', 'value'),
+    State('Vigorous', 'value'),
+    State('Moderate', 'value'),
+    State('Light', 'value'),
+    State('Indoors', 'value'),
+    State('BMI', 'value')])
+
+def recommend(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
+    Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
+    ind_to_change = list(range(3,11))
+    X = []
+    for i in ind_to_change:
+        temp_1 = Vars[0].copy()
+        temp_2 = Vars[0].copy()
+        result = model.predict(Vars)[0]
+        temp_1[i] = temp_1[i] - 1
+        X.append(temp_1)
+        temp_2[i] = temp_2[i] + 1 # works if you comment this and the next line out.
+        X.append(temp_2)
+    Y = model.predict(X)
+    ind_of_max_Y = np.argmax(Y)
+    improvement = Y[ind_of_max_Y]
+    if Y[0] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you reduce your alcohol by 1 drink.'.format(improvement, 1)
+    elif Y[1] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your alcohol by 1 drink.'.format(improvement, 1)
+    elif Y[2] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your morning caffeine intake by 1.'.format(improvement, 1)
+    elif Y[3] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your morning caffeine intake by 1.'.format(improvement, 1)
+    elif Y[4] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your afternoon caffeine beverage by 1.'.format(improvement, 1)
+    elif Y[5] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your afternoon caffeine beverage by 1.'.format(improvement, 1)
+    elif Y[6] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your evening caffeine beverage by 1.'.format(improvement, 1)
+    elif Y[7] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your evening caffeine beverage by 1.'.format(improvement, 1)
+    elif Y[8] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease your overall activity level by 1 level.'.format(improvement, 1)
+    elif Y[9] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase your overall activity level by 1 level.'.format(improvement, 1)
+    elif Y[10] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
+    elif Y[11] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
+    elif Y[12] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your moderate activities by 1 hour.'.format(improvement, 1)
+    elif Y[13] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your moderate activities by 1 hour.'.format(improvement, 1)
+    elif Y[14] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you decrease the duration of your light activities by 1 hour.'.format(improvement, 1)
+    elif Y[15] == improvement:
+        return 'Your improved sleep quality score score could be {:,.2f}, if you increase the duration of your light activities by 1 hour.'.format(improvement, 1)
+    elif result == improvement:
+        return 'Your sleep quality score is at its max of {:,.2f}.'.format(improvement, 1)
+
+
+
+@app.callback(
+    Output('Graph', 'figure'),
+    [Input('age_button', 'n_clicks')],
+    [State('Age', 'value'),
+    State('Gender', 'value'),
+    State('BP', 'value'),
+    State('AlcoholicDrinks', 'value'),
+    State('MorningCaffeine', 'value'),
+    State('AfternoonCaffeine', 'value'),
+    State('EveningCaffeine', 'value'),
+    State('ActivityLevel', 'value'),
+    State('Vigorous', 'value'),
+    State('Moderate', 'value'),
+    State('Light', 'value'),
+    State('Indoors', 'value'),
+    State('BMI', 'value')])
 
 def predict_with_age(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI):
 
-	Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
-	ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
-	result = model.predict(Vars)[0]
-	return {
-	'data': [
-	{'x': ['sleep scores'], 'y': [2.67], 'type':'bar', 'name':'Population Average Sleep Quality Score'},
-	{'x': ['sleep scores'], 'y': [result], 'type':'bar', 'name':'Your Sleep Quality Score'},
-	{'x': ['sleep scores'], 'y': [4], 'type':'bar', 'name':'Your Sleep Quality Score Following Top Recommendation'}],
-	# 'marker':{'bar_bcolor':colors['rgb(204,204,204)','rgb(222,45,38)', 'rgb(222,45,38)']},
-	'layout':{
-    	'plot_bgcolor': colors['background'],
-    	'paper_bgcolor': colors['background']
-    	}
+    Vars = [[Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, AfternoonCaffeine, EveningCaffeine,
+    ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
+    result = model.predict(Vars)[0]
+    return {
+    'data': [
+    {'x': ['sleep scores'], 'y': [2.67], 'type':'bar', 'name':'Population Average Sleep Quality Score',
+    'marker':{'color':'#B9D2E1', 'line':{'width':'2.5', 'color':'#618FAE'}}},
+    {'x': ['sleep scores'], 'y': [result], 'type':'bar', 'name':'Your Sleep Quality Score',
+    'marker':{'color':'#F5CC8C', 'line':{'width':'2.5', 'color':'#DEA764'}}},
+    {'x': ['sleep scores'], 'y': [4], 'type':'bar', 'name':'Your Sleep Quality Score Following Top Recommendation',
+    'marker':{'color':'#C9DAA6', 'line':{'width':'2.5', 'color':'#ABC574'}}}
+    ],
+    'layout':{
+        'plot_bgcolor': colors['background'],
+        'paper_bgcolor': colors['background']
+        }
     }
 
 if __name__ == '__main__':
