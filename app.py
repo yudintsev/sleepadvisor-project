@@ -36,7 +36,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             html.Label('Please enter your age: '),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Age', type='number', style = {
+        html.Div(dcc.Input(id='Age', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'color':'#667E8D', 'font-family':'Arial'}, value = 30), style = {'padding':10}),
 
