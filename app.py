@@ -22,6 +22,8 @@ colors = {
     'background': '#E3E9EE'
     }
 
+app.title = 'SleepAdvisor' # removes the default 'Dash' icon from the tab in the browser.
+
 # Add a background color to style 'backgroundColor' - pick color from HTML color picker.
 app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizontal-align':'center'}, children=[
     html.H1(children='Welcome to SleepAdvisor!',
@@ -33,10 +35,10 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
 
     html.Div([
         html.Div(children=[
-            html.Label('Please enter your age: '),
+            html.Label('You can enter your age here: '),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Age', type='number', style = {
+        html.Div(dcc.Input(id='Age', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'color':'#667E8D', 'font-family':'Arial'}, value = 30), style = {'padding':10}),
 
@@ -53,7 +55,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
 
 
         html.Div(children=[
-            html.Label('Please select your gender: '),
+            html.Label('And also select your gender here:'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
         html.Div(
@@ -86,7 +88,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
 
         html.Div(
-            dcc.Input(id='AlcoholicDrinks', type='number', style = {
+            dcc.Input(id='AlcoholicDrinks', type='number', min = 0, style = {
                 'marginLeft':60, 'width':'160','height':'25',
                 'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 6), style ={'padding':10}),
 
@@ -97,7 +99,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
         html.Div(
-            dcc.Input(id='MorningCaffeine', type='number', style = {
+            dcc.Input(id='MorningCaffeine', type='number', min = 0, style = {
                 'marginLeft':60, 'width':'160','height':'25',
                 'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 3), style ={'padding':10}),
 
@@ -107,7 +109,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             html.Label('How many 12-oz. caffeinated drinks (coffee, soda, tea) do you usually have in the afternoon?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='AfternoonCaffeine', type='number', style = {
+        html.Div(dcc.Input(id='AfternoonCaffeine', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 2), style ={'padding':10}),
 
@@ -117,7 +119,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             html.Label('How many 12-oz. caffeinated drinks (coffee, soda, tea) do you usually have in the evening?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='EveningCaffeine', type='number', style = {
+        html.Div(dcc.Input(id='EveningCaffeine', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 1), style ={'padding':10})],
 
@@ -136,7 +138,7 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
         html.Div(
             dcc.Dropdown(id='ActivityLevel',options=[
-                {'label': 'Litle to none', 'value': 1},
+                {'label': 'Little to none', 'value': 1},
                 {'label': 'Light', 'value': 2},
                 {'label': 'Moderate', 'value': 3},
                 {'label': 'Vigorous', 'value': 4},
@@ -147,30 +149,30 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
 
 
         html.Div(children=[
-            html.Label('How much time per day (in hours) did you spend participating vigorous physical activities?'),
+            html.Label('Over the last two weeks, how much time per day (in hours) did you spend participating vigorous physical activities?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Vigorous', type='number', style = {
+        html.Div(dcc.Input(id='Vigorous', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 0), style ={'padding':10}),
 
 
 
         html.Div(children=[
-            html.Label('How much time per day (in hours) did you spend participating moderate-level physical activities?'),
+            html.Label('Over the last two weeks, how much time per day (in hours) did you spend participating moderate-level physical activities?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Moderate', type='number', style = {
+        html.Div(dcc.Input(id='Moderate', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 0), style ={'padding':10}),
 
 
 
         html.Div(children=[
-            html.Label('How much time per day (in hours) did you spend participating light physical activities?'),
+            html.Label('Over the last two weeks, how much time per day (in hours) did you spend participating light physical activities?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Light', type='number', style = {
+        html.Div(dcc.Input(id='Light', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 0), style ={'padding':10}),
 
@@ -180,17 +182,17 @@ app.layout = html.Div(style = {'backgroundColor':colors['background'], 'horizont
             html.Label('How much time (%) did you spend doing those activities indoors?'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='Indoors', type='number', style = {
+        html.Div(dcc.Input(id='Indoors', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 50), style ={'padding':10}),
 
 
 
         html.Div(children=[
-            html.Label('What is your BMI?'),
+            html.Label('Enter your current BMI here:'),
             ], style={'marginLeft':60, 'marginRight':20,
             'textAlign':'left', 'color':'#667E8D', 'fontSize':18, 'font-family':'Arial'}),
-        html.Div(dcc.Input(id='BMI', type='number', style = {
+        html.Div(dcc.Input(id='BMI', type='number', min = 0, style = {
             'marginLeft':60, 'width':'160','height':'25',
             'fontSize':16, 'font-family':'Arial', 'color':'#667E8D'}, value = 28), style ={'padding':10}),
 
@@ -281,10 +283,10 @@ def recommend(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, After
     ActivityLevel, Vigorous, Moderate, Light, Indoors, BMI]]
     ind_to_change = list(range(3,11))
     X = []
+#    X.append(Vars[0])
     for i in ind_to_change:
         temp_1 = Vars[0].copy()
         temp_2 = Vars[0].copy()
-        result = model.predict(Vars)[0]
         temp_1[i] = temp_1[i] - 1
         X.append(temp_1)
         temp_2[i] = temp_2[i] + 1 # works if you comment this and the next line out.
@@ -292,40 +294,43 @@ def recommend(n_clicks, Age, Gender, BP, AlcoholicDrinks, MorningCaffeine, After
     Y = model.predict(X)
     ind_of_max_Y = np.argmax(Y)
     improvement = Y[ind_of_max_Y]
-    if Y[0] == improvement:
+    result = model.predict(Vars)[0]
+    if improvement - result < 0.009:
+    	return 'Your sleep quality score is at its max of {:,.2f}.'.format(result, 1)
+    elif Y[0] == improvement and AlcoholicDrinks != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you reduced your alcohol consuption by 1 drink.'.format(improvement, 1)
     elif Y[1] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased your alcohol consumption by 1 drink.'.format(improvement, 1)
-    elif Y[2] == improvement:
+    elif Y[2] == improvement and MorningCaffeine != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased your morning caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[3] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased your morning caffeine intake by 1 serving.'.format(improvement, 1)
-    elif Y[4] == improvement:
+    elif Y[4] == improvement and AfternoonCaffeine != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased your afternoon caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[5] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased your afternoon caffeine intake by 1 serving.'.format(improvement, 1)
-    elif Y[6] == improvement:
+    elif Y[6] == improvement and EveningCaffeine != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased your evening caffeine intake by 1 serving.'.format(improvement, 1)
     elif Y[7] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased your evening caffeine intake by 1 serving.'.format(improvement, 1)
-    elif Y[8] == improvement:
+    elif Y[8] == improvement and ActivityLevel > 1:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased your overall activity level by 1.'.format(improvement, 1)
-    elif Y[9] == improvement:
+    elif Y[9] == improvement and ActivityLevel != 4:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased your overall activity level by 1.'.format(improvement, 1)
-    elif Y[10] == improvement:
+    elif Y[10] == improvement and Vigorous != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
     elif Y[11] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your vigorous activities by 1 hour.'.format(improvement, 1)
-    elif Y[12] == improvement:
+    elif Y[12] == improvement and Moderate != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your moderate-level activities by 1 hour.'.format(improvement, 1)
     elif Y[13] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your moderate-level activities by 1 hour.'.format(improvement, 1)
-    elif Y[14] == improvement:
+    elif Y[14] == improvement and Light != 0:
         return 'Your improved sleep quality score could be {:,.2f}, if you decreased the duration of your light-level activities by 1 hour.'.format(improvement, 1)
     elif Y[15] == improvement:
         return 'Your improved sleep quality score could be {:,.2f}, if you increased the duration of your light-level activities by 1 hour.'.format(improvement, 1)
-    elif result == improvement:
-        return 'Your sleep quality score is at its max of {:,.2f}.'.format(improvement, 1)
+#    elif result == improvement:
+#        return 'Your sleep quality score is at its max of {:,.2f}.'.format(improvement, 1)
 
 
 
